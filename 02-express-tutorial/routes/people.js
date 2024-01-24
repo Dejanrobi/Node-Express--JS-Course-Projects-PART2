@@ -12,24 +12,6 @@ const {
     deletePerson
 } = require('../controllers/people')
 
-// // people get request
-// router.get('/', getPeople)
-
-// // post request on the /api/people url
-// router.post('/', createPerson)
-
-
-
-// // adding the name that we send to the server as a json  into the people's array
-
-// router.post('/postman', createPersonPostman)
-
-// // updating data
-// router.put('/:id', updatePerson)
-
-// // deleting data
-// router.delete('/:id', deletePerson)
-
 
 // Another way of setting up the routes
 // since the paths of get and post do not change, we can write them on the same line

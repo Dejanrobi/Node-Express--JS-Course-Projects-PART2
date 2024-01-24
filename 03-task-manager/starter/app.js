@@ -4,6 +4,7 @@ const express = require('express')
 const app = express();
 const tasksRouter = require('./routes/tasks')
 const connectDB = require('./db/connect')
+// functions in that package are automatically executed
 require('dotenv').config()
 const notFound = require('./middleware/notFound')
 const errorHandlerMiddleware = require('./middleware/errorHandler')

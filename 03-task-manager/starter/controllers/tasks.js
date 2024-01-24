@@ -42,6 +42,7 @@ const updateTask = asyncWrapper( async (req, res)=>{
     const {id:taskID} = req.params
 
     // updating the task by sending the id and the data to update
+    // set new to true and runValidators to true because the validators that were set in the schema are not automatically run here
     const task = await TaskModel.findOneAndUpdate({_id:taskID}, req.body, {
         new:true,
         runValidators: true           
