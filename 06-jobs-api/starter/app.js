@@ -8,8 +8,7 @@ const xss = require('xss-clean');
 const rateLimiter = require('express-rate-limit')
 
 
-const express = require('express');
-const app = express();
+
 
 // connectDB
 const connectDB = require('./db/connect')
@@ -24,6 +23,10 @@ const authenticateUser = require("./middleware/authentication")
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
+
+// creating the express server
+const express = require('express');
+const app = express();
 
 // implementing the rate limiter (the number of requests to be made by the user)
 app.set('trust proxy', 1);

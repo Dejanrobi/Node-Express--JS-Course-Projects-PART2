@@ -14,7 +14,8 @@ const authenticationMiddleware = async(req, res, next)=>{
         throw new UnauthenticatedError('No token provided')
     }
 
-    // accessing the token
+    // accessing the token by splitting the header with the space and taking the second item in the array which is the token
+    // the first part is Bearer
     const token = authHeader.split(" ")[1]
 
     try {

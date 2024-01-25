@@ -1,8 +1,6 @@
 // importing Product Model
 const ProductModel = require('../models/product')
 
-
-
 // sort, select, limit, skip
 const getAllProductsStatic = async (req, res)=>{
     // retrieving products in the collection
@@ -28,10 +26,12 @@ const getAllProducts = async(req, res)=>{
     if(company){
         queryObject.company = company
     }
+    // contains something that looks like name i.e includes the name, options i means case insensitive
     if(name){
         queryObject.name = { $regex: name, $options:'i'}
     }
     if(numericFilters){
+        // mapping each symbol to mongoose syntax
         const operatorMap = {
             '>':'$gt',
             '>=':'$gte',
@@ -39,8 +39,10 @@ const getAllProducts = async(req, res)=>{
             '<':'$lt',
             '<=':'$lte'
         }
-        // pass in all the  values
+        // pass in all the  values the less than, greater than e.t.c in a regex
         const regEx = /\b(<|>|>=|=|<=)\b/g
+        // going through the numericFilters and replacing the matched sympol in the filters with mongoose syntax
+        //i.e price>30 = price-gt-30,rating-lt-20
         let filters = numericFilters.replace(regEx, (match)=>`-${operatorMap[match]}-`)
 
         const options = ['price', 'rating']
@@ -49,6 +51,7 @@ const getAllProducts = async(req, res)=>{
         filters.split(',').forEach((item)=>{
             // array destructuring and splitting based on '-'
             // in array destructuring, whatever you type first, will match the first item in the array
+            // price, gt, 30
             const [field, operator, value] = item.split('-')
 
             // only if the field is in our options, then we will add it to our query object
@@ -58,16 +61,18 @@ const getAllProducts = async(req, res)=>{
                 queryObject[field]={[operator]:Number(value)}
             }
         })
-        console.log(numericFilters)
-        console.log(filters)
+        // console.log(numericFilters)
+        // console.log(filters)
     }
 
     console.log(queryObject)
+    
 
     // finding the items 
     let result = ProductModel.find(queryObject)
-
+  
     // sorting the items
+    // we split becase we need the items to be passed i.e "name price" and not "name,price"
     if(sort){
         const sortList = sort.split(',').join(" ")
         result = result.sort(sortList)
@@ -86,8 +91,9 @@ const getAllProducts = async(req, res)=>{
     const limit = Number(req.query.limit) || 10
 
     // number of items to skip
-    // the first page, no items will be skipped, second page, 10 items will be skipped, 
+    // the first page, no items will be skipped because page-1 is 0 its, second page, 10 items will be skipped, 
     // the third page, 20 items will be skipped e.t.c.
+    //
     const skip = (page - 1)*limit
 
     // setting the final result

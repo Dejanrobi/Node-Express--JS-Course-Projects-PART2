@@ -57,7 +57,8 @@ const login = async  (req, res)=>{
         throw new UnauthenticatedError("Invalid Email")
     }
 
-    // compare the password
+    // compare the password, 
+    // password: this is the password passed by the user right now then compared to the one in the database.
     const isPasswordCorrect = await user.comparePassword(password)
 
     // throw an error if the password doesn't match

@@ -3,7 +3,6 @@ require("dotenv").config()
 // a package to handle async errors
 require('express-async-errors')
 
-
 // creating the server using express
 const express = require('express');
 const app = express();
@@ -15,10 +14,7 @@ const connectDB = require('./db/connect')
 const productsRouter = require('./routes/products')
 
 //Importing Middlewares
-
-// not found
 const notFoundMiddleware = require('./middleware/not-found')
-// error handler
 const errorHandlerMiddleware = require('./middleware/error-handler')
 
 // Setting Middlewares to patch any passed json data to the request body
@@ -26,20 +22,12 @@ app.use(express.json())
 
 
 // ROUTES
-
-// testing
-// home route
-app.get('/', (req, res)=>{
-    res.send("<h1>Store API</h1> <a href='/api/v1/products'>products route</a>")
-
-})
-
 // products router middleware
 // set the base url and the router
 app.use('/api/v1/products', productsRouter)
 
 // error routes
-app.use(notFoundMiddleware);
+app.use(notFoundMiddleware); //displays not found when the endpoint requested does not exist in the above routes
 app.use(errorHandlerMiddleware)
 
 
