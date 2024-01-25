@@ -52,7 +52,7 @@ app.use('/api/v1/jobs',authenticateUser, jobsRouter)
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 3000;
+const port = 8080;
 
 const start = async () => {
   try {
